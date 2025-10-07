@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { ensureSignedIn } from "./auth";
 import { createRoom, joinRoomByCode } from "./rooms";
-import { startRoom, upsertProgress, grantArtifact, incrementAir } from "./gameState";
+import { startRoom, upsertProgress, grantArtifact, incrementAir, initRoomEntities } from "./gameState";
 import { useAirTimer } from "./hooks/useAirTimer";
 import { subscribeRoom } from "./realtime";
 import { fetchPlayers, fetchProgress, fetchArtifacts } from "./fetchers";
+import DevPuzzleTester from "./dev/DevPuzzleTester";
 
 type View = 'home' | 'room';
 
@@ -87,6 +88,7 @@ export default function App() {
   async function handleStart() {
     if (!roomId) return;
     await startRoom(roomId);
+    await initRoomEntities(roomId);  // Test only: init entities
     await refetchAll();                 // ✅ refresh self
     await sub?.sendBroadcast('refresh', {});
   }
@@ -156,6 +158,14 @@ Progress: {JSON.stringify(progress, null, 2)}
         <pre className="bg-gray-100 p-2 rounded text-xs overflow-auto max-h-40">
 Artifacts: {JSON.stringify(artifacts, null, 2)}
         </pre>
+        {/* dev tester panel */}
+        {roomId && (
+          <DevPuzzleTester
+            roomId={roomId}
+            onRefetch={refetchAll}
+            sub={sub}
+          />
+        )}
       </div>
     </div>
   );

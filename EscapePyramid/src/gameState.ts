@@ -44,3 +44,31 @@ export async function grantArtifact(roomId: string, key: string, qty = 1) {
   );
   if (error) throw error;
 }
+
+export async function initRoomEntities(roomId: string) {
+  const { error } = await supabase.rpc('init_room_entities', { p_room_id: roomId });
+  if (error) throw error;
+}
+
+export async function getVariant(roomId: string, key: string) {
+  const { data, error } = await supabase.rpc('get_puzzle_variant', { p_room_id: roomId, p_key: key });
+  if (error) throw error;
+  return data as any; // JSON
+}
+
+export async function markLessonRead(roomId: string, key: string) {
+  const { error } = await supabase.rpc('mark_lesson_read', { p_room_id: roomId, p_key: key });
+  if (error) throw error;
+}
+
+export async function solvePuzzle(roomId: string, key: string, answer: any) {
+  const { data, error } = await supabase.rpc('solve_puzzle', { p_room_id: roomId, p_key: key, p_answer: answer });
+  if (error) throw error;
+  return data as { correct: boolean; airAward: number; artifactsAwarded: string[]; doorsOpened: string[] };
+}
+
+export async function performFinal(roomId: string, mode: 'cooperate'|'solo') {
+  const { data, error } = await supabase.rpc('perform_final_ritual', { p_room_id: roomId, p_mode: mode });
+  if (error) throw error;
+  return data as any;
+}
