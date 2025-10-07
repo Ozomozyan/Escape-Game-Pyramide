@@ -1,0 +1,154 @@
+{
+  "rooms": [
+    {
+      "id": 0,
+      "name": "Antechamber",
+      "theme": "Upper/Lower Egypt",
+      "lesson": {
+        "title": "Geography of Ancient Egypt",
+        "content": "Ancient Egypt was divided into two regions: Upper Egypt (south, with the white crown) and Lower Egypt (north, with the red crown). The Nile flows from south to north.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "orientation",
+        "description": "Orient the compass disk to point north, aligning the red and white crowns correctly",
+        "surveyorInfo": "The north star is visible through the opening above. The white crown represents the south.",
+        "scribeInfo": "The red crown (Lower Egypt) is associated with the north and the delta. The white crown (Upper Egypt) is associated with the south."
+      },
+      "reward": {
+        "id": "stellar_disk",
+        "name": "Stellar Disk",
+        "description": "Helps orient rooms using astronomy"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Surveyors' Gallery",
+      "theme": "3-4-5 Rope",
+      "lesson": {
+        "title": "The Pythagorean Triangle",
+        "content": "Egyptian surveyors used a rope with 12 equal knots to form a right angle. By forming a triangle with sides of 3, 4, and 5 units, they could ensure perfect 90-degree angles.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "geometry",
+        "description": "Reconstruct a right angle using the knotted rope to realign the corridor",
+        "surveyorInfo": "You have the rope with 12 knots. Form a triangle with sides measuring 3, 4, and 5 knots.",
+        "scribeInfo": "The ancient texts show that a 3-4-5 triangle creates a perfect right angle at the corner between the two shorter sides."
+      },
+      "reward": {
+        "id": "cubit_ruler",
+        "name": "Cubit Ruler",
+        "description": "Provides precise measurements and visual feedback"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Scribe's Library",
+      "theme": "Hieroglyphs",
+      "lesson": {
+        "title": "Reading Hieroglyphs",
+        "content": "Hieroglyphs combine phonetic sounds and determinatives (meaning signs). A cartouche is an oval enclosing a royal name. Read from the direction the animals/people face.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "writing",
+        "description": "Compose the builder's cartouche using correct hieroglyphic symbols and reading direction",
+        "surveyorInfo": "The cartouche faces left. The symbols are: reed leaf (I), quail chick (W), folded cloth (S), mouth (R).",
+        "scribeInfo": "When figures face left, read from left to right. The builder's name is 'Imhotep' but written with phonetic symbols."
+      },
+      "reward": {
+        "id": "cartouche_seal",
+        "name": "Cartouche Seal",
+        "description": "Authenticates respectful access to sealed areas"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Nilometer Room",
+      "theme": "Flood Calendar",
+      "lesson": {
+        "title": "The Nile Flood and Calendar",
+        "content": "The Egyptian calendar was based on the Nile's annual flood. The rising of Sirius (Sopdet) in July marked the beginning of the flood season (Akhet). The Nilometer measured flood height for taxation.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "mechanism",
+        "description": "Adjust the water valves to reach the optimal flood height during the rising of Sirius",
+        "surveyorInfo": "The Nilometer has three levels: low (7 cubits), optimal (16 cubits), and dangerous (18+ cubits). The optimal level is needed.",
+        "scribeInfo": "The calendar shows three seasons: Akhet (flood), Peret (growing), Shemu (harvest). Sirius rises at the start of Akhet."
+      },
+      "reward": {
+        "id": "water_key",
+        "name": "Water Key",
+        "description": "Opens shared air conduits - cooperation over competition"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Funerary Suite",
+      "theme": "Ma'at",
+      "lesson": {
+        "title": "The Principle of Ma'at",
+        "content": "Ma'at represents truth, justice, and cosmic balance. In the afterlife, the deceased's heart is weighed against Ma'at's feather. Only a heart light with truth can pass.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "ethical_choice",
+        "description": "Two separate scales appear. Balance true statements with respectful actions to honor Ma'at",
+        "surveyorInfo": "Your scale shows statements about tomb construction. You must identify which are true and which show respect for the deceased.",
+        "scribeInfo": "Your scale shows funerary practices. You must identify which honor the dead properly versus which constitute tomb robbery.",
+        "branches": {
+          "maat_path": {
+            "description": "Both players choose truth and respect - shared ventilation opens",
+            "consequence": "Air timer increases significantly, both players progress together"
+          },
+          "seth_path": {
+            "description": "Either player chooses deception or disrespect",
+            "consequence": "Only one exit opens, forcing competition"
+          }
+        }
+      },
+      "reward": {
+        "id": "feather_of_maat",
+        "name": "Feather of Ma'at",
+        "description": "Represents truth and balance - required for shared escape"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Ascending Passage",
+      "theme": "Counterweights & Stars",
+      "lesson": {
+        "title": "Astronomy and Engineering",
+        "content": "Pyramids aligned with circumpolar stars that never set. Counterweight systems allowed heavy blocks to be moved with precision. Coordination was essential.",
+        "duration": 120
+      },
+      "puzzle": {
+        "type": "synchronization",
+        "description": "Synchronize counterweights while aiming the stellar disk at circumpolar stars to open the exit",
+        "surveyorInfo": "The counterweight system requires both players to pull at the exact same moment. Your weight is heavier.",
+        "scribeInfo": "The stellar disk must point to Thuban (Alpha Draconis), the north star of that era. Time your actions with your partner."
+      },
+      "reward": {
+        "id": "freedom",
+        "name": "Freedom",
+        "description": "Both players escape together if Ma'at was honored"
+      }
+    }
+  ],
+  "endings": {
+    "maat_ending": {
+      "condition": "Both players completed room 4 via the Ma'at path",
+      "title": "The Path of Ma'at",
+      "description": "Through cooperation and respect for ancient knowledge, both archaeologists escape. They seal the entrance behind them, preserving the pyramid for future generations to study respectfully.",
+      "educational_message": "True archaeology is about preserving and sharing knowledge, not taking treasures. Both players succeeded by working together and honoring Ma'at."
+    },
+    "seth_ending": {
+      "condition": "Either player chose the non-Ma'at path in room 4",
+      "title": "The Path of Seth",
+      "description": "Choosing competition over cooperation, only one exit opens. One archaeologist escapes while the other remains trapped, a reminder that selfishness has consequences.",
+      "educational_message": "When we prioritize individual gain over collective good, everyone suffers. Consider how your choices affect others."
+    }
+  }
+}
