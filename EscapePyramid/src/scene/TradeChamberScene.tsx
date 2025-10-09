@@ -132,14 +132,29 @@ function SceneBG({ facing, finalOpen }: { facing: Facing; finalOpen: boolean }) 
 
   return (
     <div className="absolute inset-0 z-0">
+      {/* Floor & ceiling vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
-      <div className={`${base} bg-[radial-gradient(80%_60%_at_50%_50%,_#2f2a25,_#1c1815_70%)]`} />
+      
+      {/* corridor background - fixed, no skew */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-center bg-cover"
+        style={{ backgroundImage: "url('/images/pyramid-corridor.webp')" }}
+      />
+      
+      {/* warm dark overlay so UI stays readable */}
+      <div aria-hidden className="absolute inset-0 bg-[#0a0704]/65 mix-blend-multiply" />
 
+      {/* Left wall overlay */}
       <div className={`${base} ${leftSkew}`}>
-        <div className="absolute left-6 top-1/4 w-[28%] h-[52%] rounded-lg border border-amber-900/30 bg-amber-50/5" />
+        <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+        <div className="absolute left-6 top-1/4 w-[28%] h-[52%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
       </div>
+
+      {/* Right wall overlay */}
       <div className={`${base} ${rightSkew}`}>
-        <div className="absolute right-8 top-1/5 w-[22%] h-[60%] rounded-lg border border-amber-900/20 bg-amber-50/5" />
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
+        <div className="absolute right-8 top-1/5 w-[22%] h-[60%] rounded-lg border border-amber-900/20 bg-amber-50/5 backdrop-blur-[1px]" />
       </div>
 
       {/* front final door */}

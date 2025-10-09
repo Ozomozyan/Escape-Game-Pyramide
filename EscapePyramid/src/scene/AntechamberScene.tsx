@@ -165,18 +165,31 @@ function SceneBackground({ facing, gateOpen }: { facing: Facing; gateOpen: boole
     <div className="absolute inset-0 z-0">
       {/* Floor & ceiling vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
-      {/* Walls */}
-      <div className={`${base} bg-[radial-gradient(80%_60%_at_50%_50%,_#3a2f25,_#221c18_70%)]`} />
+      
+      {/* corridor background - fixed, no skew */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-center bg-cover"
+        style={{ backgroundImage: "url('/images/pyramid-corridor.webp')" }}
+      />
+      
+      {/* warm dark overlay so UI stays readable */}
+      <div aria-hidden className="absolute inset-0 bg-[#0a0704]/65 mix-blend-multiply" />
+      
       {/* Left wall overlay */}
-      <div className={`${base} ${leftSkew} md:translate-x-0 md:${facing === "left" ? "" : ""}`}>
+      <div className={`${base} ${leftSkew}`}>
         <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
         {/* Indices glyphs hint pattern */}
         <div className="absolute left-4 top-1/4 w-[26%] h-[48%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
       </div>
+      
       {/* Right wall overlay */}
       <div className={`${base} ${rightSkew}`}>
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
+        {/* Right wall hint pattern (mirror of left) */}
+        <div className="absolute right-4 top-1/4 w-[26%] h-[48%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
       </div>
+      
       {/* Front gate */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div
