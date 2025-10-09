@@ -179,40 +179,54 @@ export default function CartouchePuzzle({ embedded = false }: { embedded?: boole
 
   const isCorrect = () => slots.every((t, i) => t === variant.tokens[i]);
 
-  // --- Persist success (progress, artifacts, doors, air) ----------------------
   const commitSuccess = async () => {
-    // Insert progress
-    try {
-      await supabase.from("progress").insert({
-        room_id: roomId,
-        puzzle_key: "cartouche",
-        solved: true,
-        payload: { attempt: slots, variant: variant.name },
-      });
-    } catch (_) {
-      // ignore (maybe already inserted); try to ensure solved=true
-      await supabase.from("progress").upsert(
-        { room_id: roomId, puzzle_key: "cartouche", solved: true, payload: { attempt: slots, variant: variant.name } },
+    // Progress (idempotent)
+    await supabase
+      .from("progress")
+      .upsert(
+        {
+          room_id: roomId,
+          puzzle_key: "cartouche",
+          solved: true,
+          payload: { attempt: slots, variant: variant.name },
+        },
         { onConflict: "room_id,puzzle_key" }
       );
+
+    // Door OPEN (await)
+    const { error: doorErr } = await supabase
+      .from("doors")
+      .update({ state: "open" })
+      .eq("room_id", roomId)
+      .eq("key", "ankh_door");
+    if (doorErr) console.error("door update failed", doorErr);
+
+    // Artifact + air in parallel (best effort)
+    await Promise.allSettled([
+      supabase.from("artifacts").insert({ room_id: roomId, key: "ankh_key", qty: 1 }),
+      supabase.rpc("increment_air_bonus", { p_room_id: roomId, p_delta: 60 }),
+    ]);
+
+    // HARD CONFIRM ON DB: poll the door row until it is open
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    for (let i = 0; i < 8; i++) {
+      const { data, error } = await supabase
+        .from("doors")
+        .select("state")
+        .eq("room_id", roomId)
+        .eq("key", "ankh_door")
+        .limit(1)
+        .single();
+
+      if (!error && data?.state === "open") break;
+      await sleep(120 * (i + 1)); // 120ms, 240ms, 360ms...
     }
-    // Give artifact (Ankh)
-    try {
-      await supabase.from("artifacts").insert({ room_id: roomId, key: "ankh_key", qty: 1 });
-    } catch (_) {}
-    // Open Ankh door if present
-    const { error } = await supabase.from("doors").update({ state: "open" }).eq("room_id", roomId).eq("key", "ankh_door");
-    // ignore error if any
-    // +60s air bonus (server side keeps caps/logic)
-    try {
-      await supabase.rpc("increment_air_bonus", { p_room_id: roomId, p_delta: 60 });
-    } catch (_) {
-      // ignore error
-    }
-    // refresh both clients
+
+    // Now refresh context + ping partner
     await refetchAll();
     await broadcastRefresh();
   };
+
 
   const onCheck = async () => {
     setChecking(true);
