@@ -169,16 +169,24 @@ function NileBackground({ facing, ventOpen }: { facing: Facing; ventOpen: boolea
       {/* warm dark overlay so UI stays readable */}
       <div aria-hidden className="absolute inset-0 bg-[#0a0704]/65 mix-blend-multiply" />
 
-      {/* left wall tablet silhouette */}
+      {/* left wall tablet with image */}
       <div className={`${base} ${leftSkew}`}>
         <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
-        <div className="absolute left-6 top-1/4 w-[28%] h-[52%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
+        <div 
+          className="absolute left-6 top-1/4 w-[28%] h-[52%] rounded-lg bg-center bg-cover border border-amber-900/30 shadow-lg"
+          style={{ backgroundImage: "url('/images/left.png')" }}
+          aria-hidden
+        />
       </div>
 
-      {/* right wall marks */}
+      {/* right wall marks with image */}
       <div className={`${base} ${rightSkew}`}>
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
-        <div className="absolute right-8 top-1/5 w-[22%] h-[60%] rounded-lg border border-amber-900/20 bg-amber-50/5 backdrop-blur-[1px]" />
+        <div 
+          className="absolute right-8 top-1/5 w-[22%] h-[60%] rounded-lg bg-center bg-cover border border-amber-900/20 shadow-lg"
+          style={{ backgroundImage: "url('/images/right.png')" }}
+          aria-hidden
+        />
       </div>
 
       {/* front nilometer shaft & vent */}

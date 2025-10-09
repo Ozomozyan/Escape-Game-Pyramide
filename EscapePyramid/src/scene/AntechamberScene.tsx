@@ -176,18 +176,26 @@ function SceneBackground({ facing, gateOpen }: { facing: Facing; gateOpen: boole
       {/* warm dark overlay so UI stays readable */}
       <div aria-hidden className="absolute inset-0 bg-[#0a0704]/65 mix-blend-multiply" />
       
-      {/* Left wall overlay */}
+      {/* Left wall overlay with image */}
       <div className={`${base} ${leftSkew}`}>
         <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
-        {/* Indices glyphs hint pattern */}
-        <div className="absolute left-4 top-1/4 w-[26%] h-[48%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
+        {/* Left wall image */}
+        <div 
+          className="absolute left-4 top-1/4 w-[26%] h-[48%] rounded-lg bg-center bg-cover border border-amber-900/30 shadow-lg"
+          style={{ backgroundImage: "url('/images/left.png')" }}
+          aria-hidden
+        />
       </div>
       
-      {/* Right wall overlay */}
+      {/* Right wall overlay with image */}
       <div className={`${base} ${rightSkew}`}>
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
-        {/* Right wall hint pattern (mirror of left) */}
-        <div className="absolute right-4 top-1/4 w-[26%] h-[48%] rounded-lg border border-amber-900/30 bg-amber-50/5 backdrop-blur-[1px]" />
+        {/* Right wall image */}
+        <div 
+          className="absolute right-4 top-1/4 w-[26%] h-[48%] rounded-lg bg-center bg-cover border border-amber-900/30 shadow-lg"
+          style={{ backgroundImage: "url('/images/right.png')" }}
+          aria-hidden
+        />
       </div>
       
       {/* Front gate */}
