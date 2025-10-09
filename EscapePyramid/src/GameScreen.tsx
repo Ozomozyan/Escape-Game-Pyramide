@@ -1,13 +1,13 @@
+// src/GameScreen.tsx
 import React, { useEffect, useState } from "react";
 import { useRoom } from "./state/RoomProvider";
 import IntroView from "./intro/IntroView";
-import PlayView from "./PlayView";
 import CorridorCinematic from "./cinematic/CorridorCinematic";
+import AntechamberScene from "./scene/AntechamberScene"; // ⬅️ NEW
 
 export default function GameScreen() {
   const { meta } = useRoom();
   const [view, setView] = useState<'intro'|'cinematic'|'play'>('intro');
-  const [preselect, setPreselect] = useState<string | null>(null);
 
   // When server flips to 'play', show the cinematic once
   useEffect(() => {
@@ -28,11 +28,11 @@ export default function GameScreen() {
   if (view === 'cinematic') {
     return (
       <CorridorCinematic
-        onDone={() => { setView('play'); setPreselect('cartouche'); }} // go to first puzzle
+        onDone={() => { setView('play'); }} // ⬅️ after camera push, enter 1st-person scene
       />
     );
   }
 
-  // view === 'play'
-  return <PlayView preselectPuzzle={preselect ?? undefined} />;
+  // view === 'play' -> show the first-person antechamber scene (Puzzle 1)
+  return <AntechamberScene />;
 }

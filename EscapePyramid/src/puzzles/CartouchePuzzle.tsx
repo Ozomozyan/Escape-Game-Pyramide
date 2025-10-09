@@ -106,7 +106,7 @@ function StoneCard({ children, title, right }: { children: React.ReactNode; titl
 
 // --- Main component -----------------------------------------------------------
 
-export default function CartouchePuzzle() {
+export default function CartouchePuzzle({ embedded = false }: { embedded?: boolean }) {
   const { roomId, roomCode, me, refetchAll, broadcastRefresh, progress, doors } = useRoom();
 
   // is already solved?
@@ -236,31 +236,36 @@ export default function CartouchePuzzle() {
   return (
     <div className="relative">
       {/* Tabs */}
-      <div className="flex items-center gap-2 mb-3">
-        {[
-          { k: "puzzle", label: "Puzzle" },
-          { k: "knowledge", label: "Knowledge" },
-          { k: "indices", label: "Indices" },
-        ].map((t) => (
-          <button
-            key={t.k}
-            onClick={() => setActiveTab(t.k as any)}
-            className={`px-3 py-1.5 rounded-lg border text-sm ${
-              activeTab === t.k
-                ? "bg-amber-600 text-white border-amber-500"
-                : "bg-zinc-800/60 text-zinc-200 border-zinc-700 hover:bg-zinc-800"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-        <div className="ml-auto text-xs text-zinc-400">
-          Door: <span className={`font-semibold ${ankhDoorOpen ? "text-emerald-300" : "text-zinc-300"}`}>{ankhDoorOpen ? "Ankh Gate OPEN" : "Ankh Gate LOCKED"}</span>
+      {!embedded && (
+        <div className="flex items-center gap-2 mb-3">
+          {[
+            { k: "puzzle", label: "Puzzle" },
+            { k: "knowledge", label: "Knowledge" },
+            { k: "indices", label: "Indices" },
+          ].map((t) => (
+            <button
+              key={t.k}
+              onClick={() => setActiveTab(t.k as any)}
+              className={`px-3 py-1.5 rounded-lg border text-sm ${
+                activeTab === t.k
+                  ? "bg-amber-600 text-white border-amber-500"
+                  : "bg-zinc-800/60 text-zinc-200 border-zinc-700 hover:bg-zinc-800"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+          <div className="ml-auto text-xs text-zinc-400">
+            Door:{" "}
+            <span className={`font-semibold ${ankhDoorOpen ? "text-emerald-300" : "text-zinc-300"}`}>
+              {ankhDoorOpen ? "Ankh Gate OPEN" : "Ankh Gate LOCKED"}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Panels */}
-      {activeTab === "knowledge" && (
+      {!embedded && activeTab === "knowledge" && (
         <StoneCard title="Cartouche: Name of a King">
           <Parchment>
             <div className="text-sm leading-relaxed space-y-3">
@@ -292,7 +297,7 @@ export default function CartouchePuzzle() {
         </StoneCard>
       )}
 
-      {activeTab === "indices" && (
+      {!embedded && activeTab === "indices" && (
         <StoneCard title="Indices (Hints)">
           <Parchment>
             <div className="text-sm leading-relaxed space-y-2">
@@ -308,7 +313,7 @@ export default function CartouchePuzzle() {
         </StoneCard>
       )}
 
-      {activeTab === "puzzle" && (
+      {(embedded || activeTab === "puzzle") && (
         <StoneCard
           title="Complete the Cartouche"
           right={
